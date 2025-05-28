@@ -186,3 +186,4 @@ Como no es necesario lo dejaremos por aquí para no malgastar el tiempo pero hem
 ![alt text](img/image-55.png)
 ![alt text](img/image-56.png)
 ## Desarrollo de la pagina Web
+![alt text](image.png)
