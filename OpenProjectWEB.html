@@ -3,124 +3,55 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="estilos.css">
+    <link rel="stylesheet" href="css/estilos.css" />
     <title>Api Open Project</title>
   </head>
   <body>
-    <h1>Pagina Web</h1>
-    <h2>Entrada por </h2>
-    <ul id="entrada3"></ul>
+    <header>
+      <h1><img src="img/icon.png" alt="logo">Api Open Project</h1>
+      <nav>
+        <ul>
+          <li><a href="https://www.openproject.org/">OpenProject</a></li>
+          <li>
+            <a href="https://www.openproject.org/docs/api/"
+              >Documentación de la API</a
+            >
+          </li>
+          <li><a href="https://www.openproject.org/docs/api/v3/">API v3</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      
+      <input type="text" id="apikey" placeholder="Introduce tu apikey" />
+      <button id="btnCargar">Cargar Proyectos</button>
+      <div>
+      <ul id="listaProyectos"></ul>
+      <h2>Entradas filtradas por fecha de creación</h2>
+      <table id="entrada1">
+        <tr>
+          <th>Proyecto</th>
+          <th>Horas</th>
+          <th>Fecha de creación</th>
+        </tr>
+      </table>
+      <h2>Entradas filtradas por por horas</h2>
+      <table id="entrada2">
+        <tr>
+          <th>Proyecto</th>
+          <th>Horas</th>
+          <th>Fecha de creación</th>
+          <th>Horas</th>
+        </tr>
+      </table>
+      <h2>Entradas filtradas por proyecto</h2>
+      <ul id="entrada3"></ul>
+      </div>
+    </main>
+    <footer>
+      <p>Api Open Project</p>
+      <p>Desarrollado por Angel Cantero Canillar</p>
 
-    <ul id="entrada1"></ul>
-    <h2>Entrada por </h2>
-    <ul id="entrada2"></ul>
-    <h2>Entrada por </h2>
+    <script src="pagina.js"></script>
   </body>
 </html>
-<script>
-    // const basicAuth = btoa(`${"apikey"}:${"17be44a82d106ac77058c4b24a4896fb4c3cfaf090f379418a778265473cc6ec"}`);
-     const basicAuth = btoa(`${"apikey"}:${"6463c1a8e24d301bfb601be136d3c0acdb2c918ab92ded4484ab421a2ad907b5"}`); // Co
-     // difica a base64
-  fetch("http://localhost:8080/api/v3/projects", {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Basic ${basicAuth}`
-    },
-  })
-  .then((response) => {
-      if (!response.ok) {
-        throw new Error(`Error HTTP: ${response.status}`);
-      }
-      return response.json(); // Convertimos la respuesta a JSON
-    })
-      .then(data => {
-      const list = document.getElementById('entrada1');
-      // La lista de proyectos viene en data._embedded.elements
-     const projects = data._embedded.elements.sort((b,a) => new Date(b.createdAt) - new Date(a.createdAt));
-
-      projects.forEach(project => {
-        const li = document.createElement('li');
-        li.textContent = `Proyecto: ${project.name} (ID: ${project.id}) ${project.createdAt}`;
-        list.appendChild(li);
-      });
-
-    })
-    .catch(error => console.error('Error al obtener proyectos:', error));
-    fetch("http://localhost:8080/api/v3/users", {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Basic ${basicAuth}`
-    },
-  })
-  .then((response) => {
-      if (!response.ok) {
-        throw new Error(`Error HTTP: ${response.status}`);
-      }
-      return response.json(); // Convertimos la respuesta a JSON
-    })
-      .then(data => {
-      const list = document.getElementById('entrada2');
-      // La lista de proyectos viene en data._embedded.elements
-      const projects = data._embedded.elements.filter(paco => (paco.id <= 5 ));
-
-      projects.forEach(user => {
-        const li = document.createElement('li');
-        li.textContent = `Proyecto: ${user.name} (ID: ${user.id})`;
-        list.appendChild(li);
-      });
-    })
-    .catch(error => console.error('Error al obtener proyectos:', error));
-      fetch("http://localhost:8080/api/v3/work_packages", {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Basic ${basicAuth}`
-    },
-  })
-  .then((response) => {
-      if (!response.ok) {
-        throw new Error(`Error HTTP: ${response.status}`);
-      }
-      return response.json(); // Convertimos la respuesta a JSON
-    })
-      .then(data => {
-      const list = document.getElementById('entrada2');
-      // La lista de proyectos viene en data._embedded.elements
-       const projects = data._embedded.elements.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
-
-      projects.forEach(work_packages => {
-        const li = document.createElement('li');
-        li.textContent = `Subject: ${work_packages.subject} (ID: ${work_packages.id})(Fecha de creacion: ${work_packages.id})`;
-        list.appendChild(li);
-      });
-    })
-    .catch(error => console.error('Error al obtener proyectos:', error));
-          fetch("http://localhost:8080/api/v3/work_packages", {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Basic ${basicAuth}`
-    },
-  })
-  .then((response) => {
-      if (!response.ok) {
-        throw new Error(`Error HTTP: ${response.status}`);
-      }
-      return response.json(); // Convertimos la respuesta a JSON
-    })
-      .then(data => {
-      const list = document.getElementById('entrada3');
-      // La lista de proyectos viene en data._embedded.elements
-       const projects = data._embedded.elements.sort((b,a) => b.duration - a.duration);
-
-      projects.forEach(work_packages => {
-        const li = document.createElement('li');
-        li.textContent = `Subject: ${work_packages.subject} (ID: ${work_packages.id})(Fecha de creacion: ${work_packages.createdAt})(Duracion: ${work_packages.duration})`;
-        list.appendChild(li);
-      });
-    })
-    .catch(error => console.error('Error al obtener proyectos:', error));
-    
-</script>

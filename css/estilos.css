@@ -1,0 +1,109 @@
+td,th{
+    
+    width: fit-content;
+    border: black solid 2px;
+    padding: 1em;
+    margin: 1em;
+    list-style-type: none;
+    text-align: center;
+    
+}
+table{
+    border-collapse: collapse;
+    margin-left: auto;
+  margin-right: auto;
+}
+th{
+    background-color: rgb(41, 114, 76);
+    color: white;
+    font-weight: bold;
+}
+tr:nth-child(odd){
+    background-color: lightgreen;
+}
+tr:nth-child(even){
+    background-color: lightblue;
+}
+td:nth-child(4){
+    background-color: rgb(238, 144, 144);
+}
+.filtro{
+    background-color: rgb(238, 144, 144);
+}
+body{
+background-image: url(../img/fondo.jpg);
+   background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-attachment: fixed;
+
+}
+header{
+   color: white;
+    font-size: 1.1em;
+    border-bottom: black solid 6px;
+    background: linear-gradient(to bottom, #0170B9, #27AADE);
+    border-radius:  20px 20px 0px 0px;
+    font-family: "Luckiest Guy";
+
+    
+}
+h1{
+    background-position: 25px center;
+    padding: 20px 100px 20px 100px;
+    position: relative;
+}
+h1 img{
+    position: absolute;
+    left :15px;
+    top: 15px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+main h2{
+    font-family: "Luckiest Guy";
+    font-size: 2.5em;
+    color: white;
+    text-shadow: 2px 2px 4px #000;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+h2{
+    font-family: "Aguafina Script";
+    font-style: italic;
+    color:#333;
+    letter-spacing: 5px;
+    text-shadow: 0px 0px 2px #777;
+    margin: 0px 10px 0px 10px;
+}
+nav{
+    background-color: rgb(41, 114, 76);
+    color: white;
+    padding: 1em;
+    margin: 0;
+    text-align: center;
+
+}
+nav li{
+    display: inline;
+    margin: 0 1em;
+    padding: 0.5em;
+    text-decoration: none;
+    background-color: white;
+    border: 1px solid white;
+    border-radius: 10px;
+}
+main{
+    text-align: center;
+    background-color: turquoise;
+}
+footer{
+    color: white;
+font-size: 0.7em;
+text-align: center;
+background: linear-gradient(to top, #0170B9, #27AADE);
+border-top: 6px solid black;
+padding-top: 15px;
+padding-bottom: 15px;
+border-radius:  0px 0px 100px 100px;
+}
