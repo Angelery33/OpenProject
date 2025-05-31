@@ -1,13 +1,13 @@
-const basicAuth = btoa(
-  `${"apikey"}:${"17be44a82d106ac77058c4b24a4896fb4c3cfaf090f379418a778265473cc6ec"}`
-);
 const apikey =
   "17be44a82d106ac77058c4b24a4896fb4c3cfaf090f379418a778265473cc6ec";
+const basicAuth = btoa(
+  `${"apikey"}:${apikey}`
+);
 //  const basicAuth = btoa(`${"apikey"}:${"6463c1a8e24d301bfb601be136d3c0acdb2c918ab92ded4484ab421a2ad907b5"}`);
 
 const baseURL = "http://localhost:8080/api/v3/";
 
-async function Consulta(url, apikey, method = "GET", bodyData = null) {
+async function consulta(url, apikey, method = "GET", bodyData = null) {
   try {
     const response = await fetch(baseURL + url, {
       method: method,
@@ -15,7 +15,7 @@ async function Consulta(url, apikey, method = "GET", bodyData = null) {
         Authorization: "Basic " + btoa(`apikey:${apikey}`),
         "Content-Type": "application/json",
       },
-      body: bodyData != null ? JSON.stringify(bodyData) : nul,
+      body: bodyData != null ? JSON.stringify(bodyData) : null,
     });
 
     if (!response.ok) {
@@ -31,12 +31,12 @@ async function Consulta(url, apikey, method = "GET", bodyData = null) {
 }
 document.getElementById("btnCargar").addEventListener("click", async () => {
   const apikey = document.getElementById("apikey").value;
-  const lista = document.getElementById("listaProyectos");
+  const lista = document.getElementById("entrada4");
 
   // Vaciar la lista anterior
   lista.innerHTML = "";
 
-  const data = await HacerPeticion("projects", apikey);
+  const data = await consulta("projects", apikey);
 
   if (!data || !data._embedded || !data._embedded.elements) {
     lista.innerHTML = "<li>Error al cargar proyectos</li>";
@@ -51,6 +51,86 @@ document.getElementById("btnCargar").addEventListener("click", async () => {
     const li = document.createElement("li");
     li.textContent = `Proyecto: ${project.name} (ID: ${project.id}) ${project.createdAt}`;
     lista.appendChild(li);
+  });
+});
+
+async function consulta1(url, method = "GET", bodyData = null) {
+  try {
+    const response = await fetch(baseURL + url, {
+      method,
+      headers: {
+        Authorization: "Basic " + btoa(`apikey:${apikey}`),
+        "Content-Type": "application/json",
+      },
+      body: bodyData ? JSON.stringify(bodyData) : null,
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error HTTP: ${response.status} ${response.statusText}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error al conectar con la API de OpenProject:", error);
+    return null;
+  }
+}
+
+document.getElementById("btnfiltrarproyecto").addEventListener("click", async () => {
+  const projectId = document.getElementById("proyecto").value;
+  const tabla = document.getElementById("entrada3");
+
+  // Limpiar tabla (mantener encabezado)
+  tabla.innerHTML = `
+    <tr>
+      <th>Tarea</th>
+      <th>Horas</th>
+      <th>Fecha de creación</th>
+      <th>id proyecto</th>
+    </tr>`;
+
+  if (!projectId) {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td colspan="4">Por favor introduce un ID de proyecto válido</td>`;
+    tabla.appendChild(tr);
+    return;
+  }
+const apikey = document.getElementById("apikey").value;
+
+const proyectoData = await consulta(`projects/${projectId}`, apikey);
+  const nombreProyecto = proyectoData ? proyectoData.name : "Proyecto desconocido";
+  // Llamada solo al endpoint de work_packages del proyecto concreto
+  const workPackagesData = await consulta1(`projects/${projectId}/work_packages`);
+
+  if (!workPackagesData || !workPackagesData._embedded || !workPackagesData._embedded.elements) {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td colspan="4">No se encontraron tareas o hubo un error</td>`;
+    tabla.appendChild(tr);
+    return;
+  }
+
+  // Agregar filas por cada tarea
+  workPackagesData._embedded.elements.forEach(wp => {
+    const tr = document.createElement("tr");
+
+    const tdSubject = document.createElement("td");
+    tdSubject.textContent = wp.subject || "(sin asunto)";
+    tr.appendChild(tdSubject);
+
+    // Puedes adaptar estos campos según los datos que devuelva la API
+    const tdHoras = document.createElement("td");
+    tdHoras.textContent = wp.duration ? wp.duration : "-"; // Si hay horas estimadas
+    tr.appendChild(tdHoras);
+
+    const tdCreatedAt = document.createElement("td");
+    tdCreatedAt.textContent = wp.createdAt || "-";
+    tr.appendChild(tdCreatedAt);
+
+    const tdproyecto = document.createElement("td");
+    tdproyecto.textContent = nombreProyecto; // Si hay horas gastadas
+    tr.appendChild(tdproyecto);
+
+    tabla.appendChild(tr);
   });
 });
 
