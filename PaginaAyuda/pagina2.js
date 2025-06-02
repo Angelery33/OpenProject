@@ -54,7 +54,7 @@ document.getElementById("btnCargar").addEventListener("click", async () => {
   });
 });
 
-async function consulta1(url, method = "GET", bodyData = null) {
+async function consulta1(url,apikey, method = "GET", bodyData = null) {
   try {
     const response = await fetch(baseURL + url, {
       method,
@@ -81,7 +81,26 @@ document.getElementById("btnfiltrarproyecto").addEventListener("click", async ()
   const tabla = document.getElementById("entrada3");
 
   // Limpiar tabla (mantener encabezado)
-  tabla.innerHTML = `
+  
+  if (!projectId) {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td colspan="4">Por favor introduce un ID de proyecto válido</td>`;
+    tabla.appendChild(tr);
+    return;
+  }
+
+const proyectoData = await consulta(`projects/${projectId}`, apikey);
+console.log("Nombre proyecto (directo):", proyectoData.name);
+console.log("Proyecto data keys:", Object.keys(proyectoData));
+
+if (!proyectoData || !proyectoData.name) {
+  const tr = document.createElement("tr");
+  tr.innerHTML = `<td colspan="4">El proyecto con ID ${projectId} no existe</td>`;
+  tabla.appendChild(tr);
+  return;
+}
+else {
+tabla.innerHTML = `
     <tr>
       <th>Tarea</th>
       <th>Horas</th>
@@ -89,18 +108,11 @@ document.getElementById("btnfiltrarproyecto").addEventListener("click", async ()
       <th>id proyecto</th>
     </tr>`;
 
-  if (!projectId) {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `<td colspan="4">Por favor introduce un ID de proyecto válido</td>`;
-    tabla.appendChild(tr);
-    return;
-  }
-const apikey = document.getElementById("apikey").value;
-
-const proyectoData = await consulta(`projects/${projectId}`, apikey);
+}
   const nombreProyecto = proyectoData ? proyectoData.name : "Proyecto desconocido";
   // Llamada solo al endpoint de work_packages del proyecto concreto
-  const workPackagesData = await consulta1(`projects/${projectId}/work_packages`);
+const workPackagesData = await consulta1(`projects/${projectId}/work_packages`, apikey);
+
 
   if (!workPackagesData || !workPackagesData._embedded || !workPackagesData._embedded.elements) {
     const tr = document.createElement("tr");

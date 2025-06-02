@@ -12,21 +12,22 @@ table{
   margin-right: auto;
 }
 th{
-    background-color: rgb(41, 114, 76);
+    background-color: #003366;
     color: white;
     font-weight: bold;
 }
-tr:nth-child(odd){
-    background-color: lightgreen;
+tr {
+  color: #333333;
 }
-tr:nth-child(even){
-    background-color: lightblue;
+
+tr:nth-child(even) {
+  background-color: #eaf4fc;
 }
-td:nth-child(4){
-    background-color: rgb(238, 144, 144);
+tr:nth-child(odd) {
+  background-color: #fff9e6;
 }
 .filtro{
-    background-color: rgb(238, 144, 144);
+    background-color: #ffe6e6;
 }
 body{
 background-image: url(../img/fondo.jpg);
@@ -41,7 +42,7 @@ header{
     border-bottom: black solid 6px;
     background: linear-gradient(to bottom, #0170B9, #27AADE);
     border-radius:  20px 20px 0px 0px;
-    font-family: "Luckiest Guy";
+    
 
     
 }
@@ -59,7 +60,6 @@ h1 img{
     border-radius: 50%;
 }
 main h2 {
-    font-family: "Luckiest Guy";
     font-size: 2em;
     color: rgb(3, 100, 160);
     text-shadow: 2px 2px 4px #47e0f5;
@@ -79,10 +79,20 @@ nav{
     padding: 1em;
     margin: 0;
     text-align: left;
+    display: flex;
+    flex-wrap: wrap;
 
 }
+ul{
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    list-style: none;
+}
 nav p{
-    font-family: "Luckiest Guy";
+    
     font-size: 1.5em;
     color: rgb(3, 100, 160);
     margin: 0;
@@ -90,21 +100,23 @@ nav p{
     text-shadow: 2px 2px 2px  #ffffff;
 }
 nav li{
-    display: inline;
-    margin: 0 1em;
-    padding: 0.5em;
-    text-decoration: none;
+    width: fit-content;
     background: linear-gradient(to top, #0170B9, #27AADE);
     color: white;
     border: 1px solid rgb(0, 0, 0);
     border-radius: 10px;
+    padding: 10px 20px;
+    margin: 5px;
 }
-nav a:visited{
-    color: rgb(255, 255, 255);
-}
+
 nav li:hover{
     background: linear-gradient(to top, #27AADE, #0170B9);
-    color: black;
+}
+nav a{
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+
 }
 main{
     background-color: white;
@@ -128,5 +140,7 @@ border-radius:  0px 0px 20px 20px;
 }
 body{
     margin: 30px;
-    font-size: 0.7em;
+    font-size: 1em;
+    font-family: "Luckiest Guy";
 }
+

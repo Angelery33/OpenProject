@@ -1,4 +1,5 @@
 # Proyecto Open Project Angel Cantero
+---
 
 ## Documentación inicial de OpenProject
 ### Parte básica
@@ -93,8 +94,9 @@ A continuación una prueba de introducción de usuario desde pgadmin.
 ![alt text](img/image-13.png)
 Como no es necesario lo dejaremos por aquí, pero hemos comprobado y puesto en práctica cómo introducir datos mediante solicitudes.
 
+---
 ## Práctica con peticiones
-### En esta sección ha sido mucho mas fácil familiarizarse con pgAdmin y postrgreSQL.Esto se debe a que durante el curso hemos utilizado de forma constante MySQL, sin embargo JavaScript y JSON me ha resultado mucho más desafiante. 
+### En esta sección ha sido mucho mas fácil familiarizarse con pgAdmin y postrgreSQL. Esto se debe a que durante el curso hemos utilizado de forma constante MySQL, sin embargo JavaScript y JSON me ha resultado mucho más desafiante. 
 ### Por ello explicaré en mayor medida aquellas que me han costado mas realizar.
 
 1. **PARTE 1 - CRUD Básico de Proyectos**
@@ -122,7 +124,7 @@ Como no es necesario lo dejaremos por aquí, pero hemos comprobado y puesto en p
 
    6. **Extra  Lista todos los usuarios de Open Project**
       ![alt text](img/image-47.png)
-   
+   ---
    
    **Llamada a la API**
    - Tener en cuenta que en la sección de autorizacion de postman habremos incluido una basic auth,con nombre de usuario apikey y el token que generemos en nuestro openproject.
@@ -146,8 +148,8 @@ Como no es necesario lo dejaremos por aquí, pero hemos comprobado y puesto en p
 
    6. **Extra  Lista todos los usuarios de Open Project (GET, ruta a users)**
       ![alt text](img/image-36.png)
-      
- 2. **PARTE 2 - Consultas Ordenadas**
+ ---
+ 1. **PARTE 2 - Consultas Ordenadas**
    
    **SQL**
 
@@ -162,7 +164,7 @@ Como no es necesario lo dejaremos por aquí, pero hemos comprobado y puesto en p
      3. **Lista los proyectos ordenados por orden alfabético**
     ![alt text](img/image-23.png)
 
-   
+ ---  
    **Llamada a la API**
    - Aqui empezo a complicarse un poco ya que nos costó más identificar en la web mencionada anteriormente como realizar los filtros requeridos. Con la ayuda de un compañero (Adrian) pudimos ver mejor como funcionaba y que estructura requerida.
    - Primero lo escribimos manualmente pero luego vimos que se pueden escribir los filtros en la tabla de query params poniendo el tipo en un lado y los valores a comparar/filtrar al otro.De esta manera, se coloca automáticamente  en la ruta los filtros correspondientes. 
@@ -177,7 +179,7 @@ Como no es necesario lo dejaremos por aquí, pero hemos comprobado y puesto en p
      3. **Lista los proyectos ordenados por orden alfabético (GET, ruta a projects,sortBy,valor :name,orden:asc)**
       ![alt text](img/image-39.png)
 
-
+---
 3. **PARTE 3 – Consultas con Filtros**
    
    **SQL**
@@ -204,31 +206,31 @@ Como no es necesario lo dejaremos por aquí, pero hemos comprobado y puesto en p
    ![alt text](img/image-30.png)
 
 - Como no sabia si con activo e inactivo se refería al status o las fechas de comienzo y finalización lo he hecho de ambas formas para poder observar distintos enfoques. 
-
+---
    **Llamada a la API**
 
    - En esta parte de llamadas a la Api hubo que buscar como usar los filtros y con que campos y en que formato, sobre todo el 5 y el 6 que generaron mas problemas.
 
-   1. **Crea un proyecto llamado “Proyecto 1”.**
+     1. **Crea un proyecto llamado “Proyecto 1”.**
    ![alt text](img/image-40.png)
 
-   2. **Lista todos los proyectos llamados “Proyecto 1”. (GET, ruta a projects,filters,clave:name,operator:=,valor:proyecto1)**
+     2. **Lista todos los proyectos llamados “Proyecto 1”. (GET, ruta a projects,filters,clave:name,operator:=,valor:proyecto1)**
    ![alt text](img/image-41.png)
 
-   3. **Crea un par de tareas**
+     3. **Crea un par de tareas**
    ![alt text](img/image-42.png)
    ![alt text](img/image-43.png)
 
-   4. **Lista todas las tareas activas (GET, ruta a work_packages,filters,clave:status,operator:!,valor:12)valor 12 es el id de status Terminado**
+     4. **Lista todas las tareas activas (GET, ruta a work_packages,filters,clave:status,operator:!,valor:12)valor 12 es el id de status Terminado**
    ![alt text](img/image-44.png)
 
    - Para estos 2 últimos hubo que hacer uso de operadores distintos a los que deberían usarse ya que solo se puede comprobar si esta entre dos fechas, o si es la fecha exacta
   
-   1. **Lista todas las tareas creadas desde antes del 30 de mayo de 2025 (GET, ruta a work_packages,filters,clave:createdAt,operator:<>d,valor:2025-01-01 y 2025-05-30)este operador busca entre esas dos fechas**
+     5. **Lista todas las tareas creadas desde antes del 30 de mayo de 2025 (GET, ruta a work_packages,filters,clave:createdAt,operator:<>d,valor:2025-01-01 y 2025-05-30)este operador busca entre esas dos fechas**
    ![alt text](img/image-45.png)
    ![alt text](img/image-46.png)
 
-   2. **Lista todas las tareas inactivas creadas después del 20 de mayo (GET, ruta a work_packages,filters,clave:createdAt,operator:<>d,valor:2025-05-20 y 2025-05-30)&(filters,clave:status,operator:=,valor:12)buscando que este entre el 20 y la fecha actual en el momento de la captura y que ademas este finalizada**
+     6. **Lista todas las tareas inactivas creadas después del 20 de mayo (GET, ruta a work_packages,filters,clave:createdAt,operator:<>d,valor:2025-05-20 y 2025-05-30)&(filters,clave:status,operator:=,valor:12)buscando que este entre el 20 y la fecha actual en el momento de la captura y que ademas este finalizada**
    ![alt text](img/image-48.png)
     
       
@@ -238,21 +240,67 @@ Como no es necesario lo dejaremos por aquí, pero hemos comprobado y puesto en p
 - Para hacer uso de GitHub he decidido usar la interfaz de GitHub Desktop que aun siendo la primera vez que la usamos, durante el curso usamos la terminal, resulta muy fácil de usar.
 - Haré una breve descripción de los pasos realizados en cada captura.
   
-![alt text](img/image-49.png)
+  ![alt text](img/image-49.png)
+
 **Creación del repositorio.**
-![alt text](img/image-50.png)
-![alt text](img/image-51.png)
+  ![alt text](img/image-50.png)
+  ![alt text](img/image-51.png)
+
 **Publicación del mismo en GitHub**
 
-![alt text](img/image-52.png)
+  ![alt text](img/image-52.png)
 
 **Vemos como la interfaz nos muestra detalladamente todos los cambios realizados los cuales confirmaremos en local mediante el commit que podemos hacer abajo a la izquierda de la ventana de manera sencilla.**
 
 ![alt text](img/image-53.png)
+
 **Hacemos un push con el commit que aun no se enccuentra en GitHub**
 ![alt text](img/image-54.png)
+
 **Y ya tenemos nuestro repositorio en GitHub actualizado en unos pocos y sencillos pasos.**
 ![alt text](img/image-55.png)
 ![alt text](img/image-56.png)
+
 **Comprobamos que se pueda colaborar por parte de los demas usuarios y hacemos publico nuestro repositorio desde GitHub**.
+
 ## Desarrollo de la pagina Web
+
+En cuanto a la página Web he optado por realizar 2,una más rudimentaria basada en algunos conocimientos que he adquirido en la última semana ,ayuda de compañeros y profesores y lo estrictamente necesario de IA una vez no encontraba la solución, por otro lado la segunda página he querido intentar descrubir con ayuda de la IA y compañeros mas avanzados que cosas podía hacer con JavaScript.
+
+En cuanto a JavaScript diría que es un lenguaje que puedo entender en cierta medida debido a la semejanza con Java, pero a su vez las funciones utilizadas han sido totalmente nuevas al combinar HTML y JavaScript.
+
+HTML y CSS han sido relativamente fáciles, ya que les hemos dedicado bastante tiempo durante el curso, por ello he intentado recrearme todo lo posible en cuanto a estilos, sin excederme en cuanto a tiempo utilizado.
+
+En definitiva el resultado han sido 2 páginas web similares pero con scripts distintos.
+
+En la Web "Principal" después de la última reunión la he actualizado para insertar directamente desde el script la tabla al DOM como me recomendaron,con un vídeo de YouTube fue relativamente sencillo dado que la mayoría ya lo tenía hecho solo tenia que crear los elementos que faltaban e insertarlos al HTML directamente. En la carpeta draft se encuentra como estaba el script antes de estos cambios.
+
+En la Web Secundaria ya hay uso de botones, filtrado según los datos que se introducen, URLs e información más difícil de acceder.
+
+El aspecto es compartido por ambas mediante el mismo css.
+
+- Página Principal
+
+![alt text](image.png)
+
+- Página de pruebas
+
+
+![alt text](image-1.png)
+
+--- 
+### Bibliografía
+
+- https://www.openproject.org/
+- https://www.openproject.org/docs/api/endpoints/
+- https://www.ibm.com/es-es/think/topics/rest-apis
+- https://www.youtube.com/watch?v=MKzHruwcNOQ
+- https://www.youtube.com/watch?v=Z34BF9PCfYg
+- https://www.youtube.com/watch?v=1glVfFxj8a4
+
+--- 
+### Otros recursos utilizados
+- Información de otros compañeros y profesores.
+- Tutoriales propios de las aplicaciones como Docker,Github Desktop,etc...
+- IA para la busqueda de información,erratas o problemas.
+- Codigo reciclado del curso. 
