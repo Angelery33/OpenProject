@@ -27,9 +27,10 @@
 ### Parte técnica
 
 - La API REST permite la comunicación entre sistemas informáticos siguiendo los principios de la arquitectura REST(Representational State Transfer), la cual se basa en solicitudes que utilizan el protocolo HTTP(GET, POST, PUT, DELETE, etc.).
-- 
 - Mostraremos brevemente algunos ejemplos de la base de datos la cual es bastante extensa :
+
 ![alt text](img/image-7.png)
+
 Este es un ejemplo de una de la muchisimas tablas, con sus respectivas columnas, que podemos encontrar en la base de datos de OpenPropject.
 Podemos observar la diversidad de tablas,columnas y demas especificaciones de cada tabla de manera sencilla mediante pgAdmin.
 Como hemos comentado en la primera reunión deberemos dedicarle tiempo a entender la estructura y a los datos a introducir ya que en ocasiones será mejor realizar las consultas desde la base de datos que desde la API.
@@ -38,7 +39,9 @@ Como hemos comentado en la primera reunión deberemos dedicarle tiempo a entende
 La continua actualización y la gran comunidad que tiene la hace muy segura. 
 
 - A la hora de desplegar OpenProject en local tenemos diversas opciones que podemos encontrar explicadas en la pagina Web:
+
   ![alt text](img/image-8.png)
+
   En nuestro caso decidimos realizar la instalación mediante Docker.
   Buscamos en Docker hub la imagen de OpenProject elegimos la versión 15 realizamos el pull y una vez estaba todo listo simplemente le dimos a **RUN** en la aplicacion de Docker.
   Todo esto no fué tan simple en realidad ya que según los navegadores o equipos en los que lo hacíamos surgian diferentes problemas.
@@ -49,6 +52,7 @@ La continua actualización y la gran comunidad que tiene la hace muy segura.
 ---
 
 ## Despliegue en local de Open Project
+
 - En un principio utilizamos la interfaz gráfica y el buscador de docker para arrancar OpenProject de manera rapida y sencilla, pero mas tarde nos encontrariamos con un problema ya que  necesitaríamos extraer el puerto 5432(el cual usa por defecto PostgreSQL) con uno del propio ordenador con el fin de acceder a la base de datos desde nuestra maquina para ello copiamos el comando facilitado en la pagina de OpenProject y le añadimos **-p 8081:5432** que le dice a docker que quieres hacer accesible el puerto 5432 desde el puerto 8081.
 Esto último se puede hacer desde docker en algunas versiones recientes.
 
@@ -56,33 +60,45 @@ Esto último se puede hacer desde docker en algunas versiones recientes.
 ![alt text](img/image-1.png)
 
 - Una vez el contenedor listo lo iniciamos lo cual nos abrirá una ventana en nuestro navegador con la plataforma de OpenProject en el local host.
+
   ![alt text](img/image-9.png)
+
+
   A veces muestra un error que se soluciona cambiando la ruta y poniendo localhost.
+
   ![alt text](img/image-10.png)
+
   Una vez dentro ingresamos con el usuario admin y contraseña admin, la cual nos hará cambiar al instante de hacer el login.
   Y ahora ya podemos empezar a utilizar nuestro OpenProject privado.
 
 ## Introducción de datos
+
 Una vez creada la instancia hemos introducido una serie de datos mediante la intefaz gráfica que proporciona OpenProject.
+
 ### Ejemplos
 - Creacion de usuario
   
 ![alt text](img/image-2.png)
+
 - Creacion de grupos
   
 ![alt text](img/image-3.png)
+
 - Asignación de miembros/usuarios a un grupo
 
 ![alt text](img/image-4.png)
+
 - Creación de proyecto
 
 ![alt text](img/image-5.png)
+
 - Asignación de grupo y roles a un proyecto
 
 ![alt text](img/image-6.png)  
 
 ### Ejemplos con pgAdmin4
 Para estos ejemplos el proceso ha sido sacar mediante las herramientas de pgadmin el insert preparado para introducir datos y ver que datos usa la tabla poner los datos correspondientes
+
 ![alt text](img/image-11.png)
   
 En este tuve que buscar como introducir un jsonb vacío.
@@ -91,13 +107,17 @@ En este tuve que buscar como introducir un jsonb vacío.
 
 Este sería un ejemplo de lo dicho anteriormente para introducir de manera sencilla datos a la base mediante pgAdmin.
 A continuación una prueba de introducción de usuario desde pgadmin.
+
 ![alt text](img/image-13.png)
+
 Como no es necesario lo dejaremos por aquí, pero hemos comprobado y puesto en práctica cómo introducir datos mediante solicitudes.
 
 ---
 ## Práctica con peticiones
-### En esta sección ha sido mucho mas fácil familiarizarse con pgAdmin y postrgreSQL. Esto se debe a que durante el curso hemos utilizado de forma constante MySQL, sin embargo JavaScript y JSON me ha resultado mucho más desafiante. 
-### Por ello explicaré en mayor medida aquellas que me han costado mas realizar.
+
+**En esta sección ha sido mucho mas fácil familiarizarse con pgAdmin y postrgreSQL. Esto se debe a que durante el curso hemos utilizado de forma constante MySQL, sin embargo JavaScript y JSON me ha resultado mucho más desafiante.**
+
+ **Por ello explicaré en mayor medida aquellas que me han costado mas realizar.**
 
 1. **PARTE 1 - CRUD Básico de Proyectos**
    
@@ -171,10 +191,10 @@ Como no es necesario lo dejaremos por aquí, pero hemos comprobado y puesto en p
    - Uno de los problemas que encontramos fue que se necesita hacer uso de **?** en la ruta ,al introducirlo en query params se coloca automáticamente el símbolo.
   
      1. **Lista los proyectos ordenados por fecha de creación (de viejo a nuevo)(GET, ruta a projects,sortBy,valor :createdAt,orden:desc)**
-      ![alt text](image.png)
+      ![alt text](img/image-37.png)
 
      2. **Lista los proyectos ordenados por fecha de edición (de nuevo a viejo)(GET, ruta a projects,sortBy,valor :latest_activity_at,orden:desc)**
-      ![alt text](img/image-38.png)
+      ![alt text](img/image1.png)
 
      3. **Lista los proyectos ordenados por orden alfabético (GET, ruta a projects,sortBy,valor :name,orden:asc)**
       ![alt text](img/image-39.png)
@@ -235,7 +255,7 @@ Como no es necesario lo dejaremos por aquí, pero hemos comprobado y puesto en p
     
       
    
-
+---
 ## Repositorio en GitHub
 - Para hacer uso de GitHub he decidido usar la interfaz de GitHub Desktop que aun siendo la primera vez que la usamos, durante el curso usamos la terminal, resulta muy fácil de usar.
 - Haré una breve descripción de los pasos realizados en cada captura.
@@ -243,6 +263,7 @@ Como no es necesario lo dejaremos por aquí, pero hemos comprobado y puesto en p
   ![alt text](img/image-49.png)
 
 **Creación del repositorio.**
+
   ![alt text](img/image-50.png)
   ![alt text](img/image-51.png)
 
@@ -255,13 +276,17 @@ Como no es necesario lo dejaremos por aquí, pero hemos comprobado y puesto en p
 ![alt text](img/image-53.png)
 
 **Hacemos un push con el commit que aun no se enccuentra en GitHub**
+
 ![alt text](img/image-54.png)
 
 **Y ya tenemos nuestro repositorio en GitHub actualizado en unos pocos y sencillos pasos.**
+
 ![alt text](img/image-55.png)
 ![alt text](img/image-56.png)
 
 **Comprobamos que se pueda colaborar por parte de los demas usuarios y hacemos publico nuestro repositorio desde GitHub**.
+
+---
 
 ## Desarrollo de la pagina Web
 
@@ -281,22 +306,22 @@ El aspecto es compartido por ambas mediante el mismo css.
 
 - Página Principal
 
-![alt text](image.png)
+![alt text](img/pagina.png)
 
 - Página de pruebas
 
 
-![alt text](image-1.png)
+![alt text](img/pagina.png)
 
 --- 
 ### Bibliografía
 
-- https://www.openproject.org/
-- https://www.openproject.org/docs/api/endpoints/
-- https://www.ibm.com/es-es/think/topics/rest-apis
-- https://www.youtube.com/watch?v=MKzHruwcNOQ
-- https://www.youtube.com/watch?v=Z34BF9PCfYg
-- https://www.youtube.com/watch?v=1glVfFxj8a4
+- [https://www.openproject.org/](https://www.openproject.org/)
+- [https://www.openproject.org/docs/api/endpoints/](https://www.openproject.org/docs/api/endpoints/)
+- [https://www.ibm.com/es-es/think/topics/rest-apis](https://www.ibm.com/es-es/think/topics/rest-apis)
+- [https://www.youtube.com/watch?v=MKzHruwcNOQ](https://www.youtube.com/watch?v=MKzHruwcNOQ)
+- [https://www.youtube.com/watch?v=Z34BF9PCfYg](https://www.youtube.com/watch?v=Z34BF9PCfYg)
+- [https://www.youtube.com/watch?v=1glVfFxj8a4](https://www.youtube.com/watch?v=1glVfFxj8a4)
 
 --- 
 ### Otros recursos utilizados
@@ -304,3 +329,6 @@ El aspecto es compartido por ambas mediante el mismo css.
 - Tutoriales propios de las aplicaciones como Docker,Github Desktop,etc...
 - IA para la busqueda de información,erratas o problemas.
 - Codigo reciclado del curso. 
+
+---
+#### Dejo el documento en markdown ya que la exportación a pdf de markdown deja mucho que desear.
