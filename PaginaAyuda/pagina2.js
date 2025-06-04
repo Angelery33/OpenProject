@@ -1,8 +1,7 @@
 const apikey =
-  "17be44a82d106ac77058c4b24a4896fb4c3cfaf090f379418a778265473cc6ec";
-const basicAuth = btoa(
-  `${"apikey"}:${apikey}`
-);
+  "09899365ed55e01666f2ca96d6dc4649eee9e97809c71db4a296d0e946da6efd";
+// "17be44a82d106ac77058c4b24a4896fb4c3cfaf090f379418a778265473cc6ec";
+const basicAuth = btoa(`${"apikey"}:${apikey}`);
 //  const basicAuth = btoa(`${"apikey"}:${"6463c1a8e24d301bfb601be136d3c0acdb2c918ab92ded4484ab421a2ad907b5"}`);
 
 const baseURL = "http://localhost:8080/api/v3/";
@@ -54,7 +53,7 @@ document.getElementById("btnCargar").addEventListener("click", async () => {
   });
 });
 
-async function consulta1(url,apikey, method = "GET", bodyData = null) {
+async function consulta1(url, apikey, method = "GET", bodyData = null) {
   try {
     const response = await fetch(baseURL + url, {
       method,
@@ -76,76 +75,84 @@ async function consulta1(url,apikey, method = "GET", bodyData = null) {
   }
 }
 
-document.getElementById("btnfiltrarproyecto").addEventListener("click", async () => {
-  const projectId = document.getElementById("proyecto").value;
-  const tabla = document.getElementById("entrada3");
+document
+  .getElementById("btnfiltrarproyecto")
+  .addEventListener("click", async () => {
+    const projectId = document.getElementById("proyecto").value;
+    const tabla = document.getElementById("entrada3");
 
-  // Limpiar tabla (mantener encabezado)
-  
-  if (!projectId) {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `<td colspan="4">Por favor introduce un ID de proyecto válido</td>`;
-    tabla.appendChild(tr);
-    return;
-  }
+    // Limpiar tabla (mantener encabezado)
 
-const proyectoData = await consulta(`projects/${projectId}`, apikey);
-console.log("Nombre proyecto (directo):", proyectoData.name);
-console.log("Proyecto data keys:", Object.keys(proyectoData));
+    if (!projectId) {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `<td colspan="4">Por favor introduce un ID de proyecto válido</td>`;
+      tabla.appendChild(tr);
+      return;
+    }
 
-if (!proyectoData || !proyectoData.name) {
-  const tr = document.createElement("tr");
-  tr.innerHTML = `<td colspan="4">El proyecto con ID ${projectId} no existe</td>`;
-  tabla.appendChild(tr);
-  return;
-}
-else {
-tabla.innerHTML = `
+    const proyectoData = await consulta(`projects/${projectId}`, apikey);
+    console.log("Nombre proyecto (directo):", proyectoData.name);
+    console.log("Proyecto data keys:", Object.keys(proyectoData));
+
+    if (!proyectoData || !proyectoData.name) {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `<td colspan="4">El proyecto con ID ${projectId} no existe</td>`;
+      tabla.appendChild(tr);
+      return;
+    } else {
+      tabla.innerHTML = `
     <tr>
       <th>Tarea</th>
       <th>Horas</th>
       <th>Fecha de creación</th>
       <th>id proyecto</th>
     </tr>`;
+    }
+    const nombreProyecto = proyectoData
+      ? proyectoData.name
+      : "Proyecto desconocido";
+    // Llamada solo al endpoint de work_packages del proyecto concreto
+    const workPackagesData = await consulta1(
+      `projects/${projectId}/work_packages`,
+      apikey
+    );
 
-}
-  const nombreProyecto = proyectoData ? proyectoData.name : "Proyecto desconocido";
-  // Llamada solo al endpoint de work_packages del proyecto concreto
-const workPackagesData = await consulta1(`projects/${projectId}/work_packages`, apikey);
+    if (
+      !workPackagesData ||
+      !workPackagesData._embedded ||
+      !workPackagesData._embedded.elements
+    ) {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `<td colspan="4">No se encontraron tareas o hubo un error</td>`;
+      tabla.appendChild(tr);
+      return;
+    }
 
+    // Agregar filas por cada tarea
+    workPackagesData._embedded.elements.forEach((wp) => {
+      const tr = document.createElement("tr");
 
-  if (!workPackagesData || !workPackagesData._embedded || !workPackagesData._embedded.elements) {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `<td colspan="4">No se encontraron tareas o hubo un error</td>`;
-    tabla.appendChild(tr);
-    return;
-  }
+      const tdSubject = document.createElement("td");
+      tdSubject.textContent = wp.subject || "(sin asunto)";
+      tr.appendChild(tdSubject);
 
-  // Agregar filas por cada tarea
-  workPackagesData._embedded.elements.forEach(wp => {
-    const tr = document.createElement("tr");
+      // Puedes adaptar estos campos según los datos que devuelva la API
+      const tdHoras = document.createElement("td");
+      tdHoras.textContent = wp.duration ? wp.duration : "-"; // Si hay horas estimadas
+      tr.appendChild(tdHoras);
 
-    const tdSubject = document.createElement("td");
-    tdSubject.textContent = wp.subject || "(sin asunto)";
-    tr.appendChild(tdSubject);
+      const tdCreatedAt = document.createElement("td");
+      tdCreatedAt.textContent = wp.createdAt || "-";
+      tr.appendChild(tdCreatedAt);
 
-    // Puedes adaptar estos campos según los datos que devuelva la API
-    const tdHoras = document.createElement("td");
-    tdHoras.textContent = wp.duration ? wp.duration : "-"; // Si hay horas estimadas
-    tr.appendChild(tdHoras);
+      const tdproyecto = document.createElement("td");
+      tdproyecto.textContent = nombreProyecto; // Si hay horas gastadas
+      tdproyecto.setAttribute("class", "filtro");
+      tr.appendChild(tdproyecto);
 
-    const tdCreatedAt = document.createElement("td");
-    tdCreatedAt.textContent = wp.createdAt || "-";
-    tr.appendChild(tdCreatedAt);
-
-    const tdproyecto = document.createElement("td");
-    tdproyecto.textContent = nombreProyecto; // Si hay horas gastadas
-    tr.appendChild(tdproyecto);
-
-    tabla.appendChild(tr);
+      tabla.appendChild(tr);
+    });
   });
-});
-
 
 fetch("http://localhost:8080/api/v3/work_packages", {
   method: "GET",

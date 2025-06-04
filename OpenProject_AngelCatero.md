@@ -306,7 +306,7 @@ El aspecto es compartido por ambas mediante el mismo css.
 
 - Página Principal
 
-![alt text](img/pagina.png)
+![alt text](img/pagina1.png)
 
 - Página de pruebas
 

@@ -1,5 +1,7 @@
+// const apikey =
+//   "17be44a82d106ac77058c4b24a4896fb4c3cfaf090f379418a778265473cc6ec";
 const apikey =
-  "17be44a82d106ac77058c4b24a4896fb4c3cfaf090f379418a778265473cc6ec";
+  "09899365ed55e01666f2ca96d6dc4649eee9e97809c71db4a296d0e946da6efd";
 const basicAuth = btoa(`${"apikey"}:${apikey}`);
 fetch("http://localhost:8080/api/v3/work_packages", {
   method: "GET",
@@ -64,20 +66,16 @@ fetch("http://localhost:8080/api/v3/work_packages", {
   })
   .catch((error) => console.error("Error al obtener proyectos:", error));
 
-
-
-
-
-
-
-  fetch(  `http://localhost:8080/api/v3/work_packages?filters=[{"duration":{"operator":"*","values":[null]}}]&sortBy=[["duration","desc"]]`
-, {
-  method: "GET",
-  headers: {
-    "Content-Type": "application/json",
-    Authorization: `Basic ${basicAuth}`,
-  },
-})
+fetch(
+  `http://localhost:8080/api/v3/work_packages?filters=[{"duration":{"operator":"*","values":[null]}}]&sortBy=[["duration","desc"]]`,
+  {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Basic ${basicAuth}`,
+    },
+  }
+)
   .then((response) => {
     if (!response.ok) {
       throw new Error(`Error HTTP: ${response.status}`);
@@ -107,8 +105,8 @@ fetch("http://localhost:8080/api/v3/work_packages", {
     cabecera.appendChild(thFecha);
 
     const tdDuration = document.createElement("th");
-      tdDuration.textContent ="Horas de trabajo";
-      cabecera.appendChild(tdDuration);
+    tdDuration.textContent = "Horas de trabajo";
+    cabecera.appendChild(tdDuration);
 
     elementoTabla.appendChild(cabecera);
 
@@ -142,13 +140,7 @@ fetch("http://localhost:8080/api/v3/work_packages", {
   })
   .catch((error) => console.error("Error al obtener proyectos:", error));
 
-
-
-
-
-
-  fetch(  `http://localhost:8080/api/v3/work_packages`
-, {
+fetch(`http://localhost:8080/api/v3/work_packages`, {
   method: "GET",
   headers: {
     "Content-Type": "application/json",
@@ -184,12 +176,12 @@ fetch("http://localhost:8080/api/v3/work_packages", {
     cabecera.appendChild(thFecha);
 
     const tdDuration = document.createElement("th");
-      tdDuration.textContent ="Horas de trabajo";
-      cabecera.appendChild(tdDuration);
-    
+    tdDuration.textContent = "Horas de trabajo";
+    cabecera.appendChild(tdDuration);
+
     const tdproyecto = document.createElement("th");
-      tdproyecto.textContent = "Proyecto";
-      cabecera.appendChild(tdproyecto);
+    tdproyecto.textContent = "Proyecto";
+    cabecera.appendChild(tdproyecto);
 
     elementoTabla.appendChild(cabecera);
 
@@ -213,11 +205,12 @@ fetch("http://localhost:8080/api/v3/work_packages", {
       elementoTr.appendChild(tdCreatedAt);
 
       const tdDuration = document.createElement("td");
-      tdDuration.textContent = work_packages?.duration ||"Sin definir";
+      tdDuration.textContent = work_packages?.duration || "Sin definir";
       elementoTr.appendChild(tdDuration);
 
       const tdproyecto = document.createElement("td");
-      tdproyecto.textContent = work_packages._links.project?.title || "Sin nombre";
+      tdproyecto.textContent =
+        work_packages._links.project?.title || "Sin nombre";
       tdproyecto.setAttribute("class", "filtro");
       elementoTr.appendChild(tdproyecto);
 
